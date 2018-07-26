@@ -128,7 +128,7 @@
 			"response": []
 		},
 		{
-			"name": "put parkingLot to ParkingBoy",
+			"name": "put parkingLot to ParkingBoy ",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -144,22 +144,25 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "839fe6d2-3b03-43f8-99ac-3b6a948f1120",
+						"id": "905a3c60-2089-45eb-913f-b2a4c7426ac5",
 						"type": "text/javascript",
 						"exec": [
 							"pm.sendRequest(\"http://localhost:8080/parkingBoys/1/parkingLots/1\", function (err, response) {",
 							"pm.test(\"Your test name\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData).to.eql(",
-							"    [ {",
+							"    [",
+							"    {",
 							"        \"id\": 1,",
 							"        \"parkingLotList\": [",
 							"            {",
 							"                \"id\": 1,",
-							"                \"size\": 3",
+							"                \"size\": 2,",
+							"                \"receiptList\": {}",
 							"            }",
 							"        ]",
-							"    }]",
+							"    }",
+							"]",
 							");",
 							"});",
 							"});"
@@ -556,6 +559,261 @@
 					"port": "8080",
 					"path": [
 						"parkingBoys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "park car get receipt",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0c840776-5b57-4421-ab85-89223723a3f2",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ceb2163-319b-4ca5-9a7d-099029ccacfb",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest(\"http://localhost:8080/parkingBoys\", function (err, response) {",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(",
+							"    [{",
+							"        \"id\": 1,",
+							"        \"parkingLotList\": []",
+							"    }]",
+							");",
+							"});",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/car",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"car"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get order by receipt",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0c840776-5b57-4421-ab85-89223723a3f2",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ceb2163-319b-4ca5-9a7d-099029ccacfb",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest(\"http://localhost:8080/parkingBoys\", function (err, response) {",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(",
+							"    [{",
+							"        \"id\": 1,",
+							"        \"parkingLotList\": []",
+							"    }]",
+							");",
+							"});",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/receipt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parkingBoy unPark Car",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0c840776-5b57-4421-ab85-89223723a3f2",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9c852ae2-b18e-41f7-98d5-8e93520fca21",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest(\"http://localhost:8080/parkingLots\", function (err, response) {",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(",
+							"    [{",
+							"        \"id\": 1,",
+							"        \"size\": 2,",
+							"        \"receiptList\": {}",
+							"    }]",
+							");",
+							"});",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1,\n        \"size\":2\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/car/5215fe3b-6e86-4635-a79e-5d3460bb24ab",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"car",
+						"5215fe3b-6e86-4635-a79e-5d3460bb24ab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parkingBoy park car",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0c840776-5b57-4421-ab85-89223723a3f2",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "905a3c60-2089-45eb-913f-b2a4c7426ac5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest(\"http://localhost:8080/parkingBoys/1/parkingLots/1\", function (err, response) {",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(",
+							"    [",
+							"    {",
+							"        \"id\": 1,",
+							"        \"parkingLotList\": [",
+							"            {",
+							"                \"id\": 1,",
+							"                \"size\": 2,",
+							"                \"receiptList\": {}",
+							"            }",
+							"        ]",
+							"    }",
+							"]",
+							");",
+							"});",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/parkingBoys/car",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parkingBoys",
+						"car"
 					]
 				}
 			},

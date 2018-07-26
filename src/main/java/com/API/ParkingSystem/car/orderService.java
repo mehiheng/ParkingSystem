@@ -17,6 +17,7 @@ public class orderService {
         if(!receiptService.receiptcarMap.isEmpty()){
             order orders=new order();
             orderList=receiptService.receiptcarMap;
+            receiptService.receiptcarMap.clear();
             return orders;
         }else{
             return null;
